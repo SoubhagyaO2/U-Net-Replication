@@ -1,0 +1,3 @@
+﻿train 800  val 80  test 120  device cuda
+epoch  1  loss 0.5279  val dice 0.1384
+epoch  2  loss 0.4412  val dice 0.0011
