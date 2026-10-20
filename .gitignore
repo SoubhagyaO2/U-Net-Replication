@@ -1,0 +1,18 @@
+# Trained model checkpoints
+results/main_bce_dice/best.pth
+*.pth
+*.pt
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Virtual environments
+venv/
+.venv/
+
+# Secrets
+.env
+
+# Dataset (large, separate license)
+data/

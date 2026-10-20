@@ -1,0 +1,16 @@
+{
+  "dice": 0.7574105858802795,
+  "iou": 0.6707711815834045,
+  "pixel_accuracy": 0.9399236043294271,
+  "precision": 0.8666374160924228,
+  "recall": 0.7182753865402699,
+  "config": {
+    "loss": "bce",
+    "epochs": 40,
+    "bs": 8,
+    "lr": 0.0001,
+    "no_aug": false,
+    "name": "extra_bce_only"
+  },
+  "best_val_dice": 0.8370782732963562
+}
