@@ -7,7 +7,23 @@ DOI: https://doi.org/10.1007/978-3-319-24574-4_28
 The U-Net implementation in `Pytorch-UNet/` is [milesial/Pytorch-UNet](https://github.com/milesial/Pytorch-UNet)
 (MIT license), used unmodified. `run_unet.py` is our own training/evaluation script.
 
-## Setup
+## Experiment 1: PhC-C2DH-U373 (dataset used in the original paper)
+Cell Tracking Challenge data (http://celltrackingchallenge.net). Gold-standard annotated frames: 15 from sequence 01
+(train) and 19 from sequence 02 (4 validation, 15 test), so the test set comes from an unseen sequence.
+Semantic (cell vs. background) segmentation, 384x512 input, BCE + Dice loss, 150 epochs.
+Note: the paper does instance segmentation with a weighted loss to split touching cells; this replication does not.
+
+| Dice | IoU | Pixel acc. | Precision | Recall |
+|---|---|---|---|---|
+| 0.891 | 0.815 | 0.989 | 0.860 | 0.943 |
+
+```
+python run_u373.py --epochs 150 --name u373
+python demo.py --dataset u373      # fast demo from saved checkpoint
+```
+Download the data from the Cell Tracking Challenge (PhC-C2DH-U373 training set) and unzip into `data/u373/raw/`.
+
+## Experiment 2: Kvasir-SEG polyp segmentation (extra dataset)
 - Dataset: Kvasir-SEG (1000 polyp images + masks), resized to 256x256. 800 train / 80 val / 120 held-out test.
   Not included in this repo; obtain it from https://datasets.simula.no/kvasir-seg/ or the Hugging Face
   mirror `kowndinya23/Kvasir-SEG` and place the parquet files in `data/` (paths are set at the top of `run_unet.py`).

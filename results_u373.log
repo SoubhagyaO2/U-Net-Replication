@@ -1,0 +1,33 @@
+﻿train 15 (seq 01)  val 4  test 15 (seq 02)  device cuda
+epoch   1  loss 1.4515  val dice 0.0975
+epoch   5  loss 1.0921  val dice 0.7006
+epoch  10  loss 0.9021  val dice 0.8376
+epoch  15  loss 0.8362  val dice 0.8730
+epoch  20  loss 0.7997  val dice 0.8846
+epoch  25  loss 0.7741  val dice 0.9018
+epoch  30  loss 0.7500  val dice 0.8661
+epoch  35  loss 0.7269  val dice 0.9137
+epoch  40  loss 0.7073  val dice 0.9133
+epoch  45  loss 0.6870  val dice 0.9070
+epoch  50  loss 0.6708  val dice 0.9080
+epoch  55  loss 0.6533  val dice 0.9010
+epoch  60  loss 0.6349  val dice 0.9095
+epoch  65  loss 0.6174  val dice 0.9180
+epoch  70  loss 0.6029  val dice 0.8963
+epoch  75  loss 0.5861  val dice 0.8887
+epoch  80  loss 0.5701  val dice 0.9158
+epoch  85  loss 0.5526  val dice 0.9114
+epoch  90  loss 0.5364  val dice 0.9158
+epoch  95  loss 0.5223  val dice 0.9177
+epoch 100  loss 0.5098  val dice 0.8996
+epoch 105  loss 0.4920  val dice 0.9157
+epoch 110  loss 0.4772  val dice 0.9153
+epoch 115  loss 0.4636  val dice 0.9156
+epoch 120  loss 0.4509  val dice 0.9151
+epoch 125  loss 0.4360  val dice 0.9183
+epoch 130  loss 0.4218  val dice 0.9161
+epoch 135  loss 0.4089  val dice 0.9163
+epoch 140  loss 0.3970  val dice 0.9147
+epoch 145  loss 0.3842  val dice 0.9147
+epoch 150  loss 0.3720  val dice 0.9171
+TEST: {"dice": 0.8906, "iou": 0.815, "pixel_accuracy": 0.9894, "precision": 0.8599, "recall": 0.9429, "best_val_dice": 0.92}
