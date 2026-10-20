@@ -15,6 +15,7 @@ ROOT = Path(__file__).parent
 sys.path.insert(0, str(ROOT / "Pytorch-UNet"))
 sys.path.insert(0, str(ROOT))
 from unet import UNet  # noqa: E402
+from preprocess import prepare_image, prepare_mask  # noqa: E402
 
 DEV = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -106,25 +107,27 @@ st.divider()
 c1, c2, c3 = st.columns(3)
 dataset = c1.selectbox("Dataset", list(CONFIG))
 model_label = c2.selectbox("Model", list(CONFIG[dataset][1]))
+source = c3.radio("Input source", ["Test samples", "Upload your own image"])
 folder = CONFIG[dataset][1][model_label]
 X, Y = load_test(dataset)
-sample = c3.selectbox("Sample", [f"Test #{i + 1}" for i in range(len(X))] + ["Upload my own image"])
 st.caption(DESCRIPTION[dataset])
 
 model = load_model(dataset, folder)
 gt = None
-if sample == "Upload my own image":
-    up = st.file_uploader("Upload an image (PNG/JPG)", type=["png", "jpg", "jpeg"])
+if source == "Upload your own image":
+    kind = "grayscale phase-contrast microscope image of cells" if dataset == "Cells" else "colour endoscopy image of a colon polyp"
+    st.info(f"The {dataset} model was trained on one kind of image, a {kind}. "
+            "Other kinds of pictures will give meaningless masks.")
+    u1, u2 = st.columns(2)
+    up = u1.file_uploader("Image (PNG / JPG / TIF)", type=["png", "jpg", "jpeg", "tif", "tiff"])
+    up_mask = u2.file_uploader("Optional: true mask, to also get metrics", type=["png", "jpg", "jpeg", "tif", "tiff"])
     if up is None:
-        st.info("Upload an image to segment it. No ground truth is available for uploads.")
         st.stop()
-    im = Image.open(up)
-    if dataset == "Cells":
-        a = np.asarray(im.convert("L").resize((512, 384), Image.BILINEAR), dtype=np.float32)
-        arr = (a - a.mean()) / (a.std() + 1e-6)
-    else:
-        arr = np.asarray(im.convert("RGB").resize((256, 256), Image.BILINEAR), dtype=np.uint8)
+    arr = prepare_image(dataset, Image.open(up))
+    if up_mask is not None:
+        gt = prepare_mask(dataset, Image.open(up_mask))
 else:
+    sample = st.selectbox("Sample", [f"Test #{i + 1}" for i in range(len(X))])
     i = int(sample.split("#")[1]) - 1
     arr, gt = X[i], Y[i]
 
@@ -138,7 +141,7 @@ with b:
     if gt is not None:
         panel("Ground-truth mask", gt, "Actual segmentation", clamp=True)
     else:
-        panel("Ground-truth mask", np.zeros_like(pred, dtype=float), "Not available for uploads", clamp=True)
+        panel("Ground-truth mask", np.zeros_like(pred, dtype=float), "Not provided (upload a mask to compare)", clamp=True)
 a, b = st.columns(2)
 with a:
     panel("Predicted mask", pred.astype(float), "Model output", clamp=True)
