@@ -7,6 +7,15 @@ DOI: https://doi.org/10.1007/978-3-319-24574-4_28
 The U-Net implementation in `Pytorch-UNet/` is [milesial/Pytorch-UNet](https://github.com/milesial/Pytorch-UNet)
 (MIT license), used unmodified. `run_unet.py` is our own training/evaluation script.
 
+## Interactive demo
+```
+pip install streamlit
+streamlit run app.py
+```
+"Segmentation Lab" web UI: pick dataset (Cells / Polyps), model (BCE + Dice / BCE only) and a test sample, or upload
+your own image; shows input, true mask, predicted mask, overlay and metrics. Requires the trained checkpoints
+(`results/*/best.pth`, not committed) and the datasets in `data/`.
+
 ## Experiment 1: PhC-C2DH-U373 (dataset used in the original paper)
 Cell Tracking Challenge data (http://celltrackingchallenge.net). Gold-standard annotated frames: 15 from sequence 01
 (train) and 19 from sequence 02 (4 validation, 15 test), so the test set comes from an unseen sequence.
